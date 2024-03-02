@@ -1,0 +1,19 @@
+.error {
+  max-width: 90vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.error > div > img {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-top: 1rem;
+}
+.errorMessage {
+  flex-shrink: 0;
+  padding-top: 1rem;
+  margin-right: 2rem;
+}

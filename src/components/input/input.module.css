@@ -1,0 +1,52 @@
+.inputArea {
+  font-size: 1.6rem;
+  padding: 1rem 1.5rem;
+  border: 2px solid transparent;
+  width: 100%;
+  height: fit-content;
+  min-height: 4rem;
+  box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8);
+  transition: 0.4s;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.selectedCharacters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+.selectedCharacter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: rgb(253, 95, 0);
+}
+.input {
+  flex: 1;
+  padding: 1rem;
+  outline: none;
+  border: none;
+}
+
+.closeSvg {
+  display: flex;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 1rem;
+}
+.closeSvg > img {
+  width: 1rem;
+  height: 1rem;
+}
+.closeSvg:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+.wrap {
+  display: inline-block;
+  margin-top: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.input {
+  width: 60rem;
+}
+@media (max-height: 500px) {
+  .input {
+    width: 80vw;
+  }
+}

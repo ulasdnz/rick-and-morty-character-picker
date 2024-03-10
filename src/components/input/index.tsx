@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, KeyboardEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./input.module.css";
 import {
@@ -7,17 +7,15 @@ import {
   deleteSelectedCharacter,
 } from "../../features/index.ts";
 import { AppDispatch, RootState } from "../../redux/store";
-import handleKeyPress from "../../utils/handleKeyPress.ts";
 import CloseSvg from "../../assets/close.svg";
 
-const index = () => {
-  const {
-    searchValue,
-    selectedCharacters,
-    isOpen,
-    fetchedData: { data },
-    focusedCharacterIndex,
-  }: InitialState = useSelector((state: RootState) => state.rickAndMorty);
+type InputProps = {
+  onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+};
+
+const Input = ({ onKeyDown }: InputProps) => {
+  const { searchValue, selectedCharacters, isOpen }: InitialState =
+    useSelector((state: RootState) => state.rickAndMorty);
   const dispatch = useDispatch<AppDispatch>();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,14 +36,14 @@ const index = () => {
       style={isOpen ? { borderColor: "rgb(253, 95, 0)" } : undefined}
     >
       <div className={styles.selectedCharacters}>
-        {selectedCharacters?.map((character, index) => (
-          <div className={styles.selectedCharacter} key={index}>
-            {character}
+        {selectedCharacters.map((character) => (
+          <div className={styles.selectedCharacter} key={character.id}>
+            {character.name}
             <div
               className={styles.closeSvg}
-              onClick={() => dispatch(deleteSelectedCharacter(character))}
+              onClick={() => dispatch(deleteSelectedCharacter(character.id))}
             >
-              <img src={CloseSvg} />
+              <img src={CloseSvg} alt={`Remove ${character.name}`} />
             </div>
           </div>
         ))}
@@ -57,12 +55,10 @@ const index = () => {
         ref={inputRef}
         className={styles.input}
         onChange={handleInputChange}
-        onKeyDown={(event) =>
-          handleKeyPress(event, dispatch, data, focusedCharacterIndex)
-        }
+        onKeyDown={onKeyDown}
       />
     </div>
   );
 };
 
-export default index;
+export default Input;

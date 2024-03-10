@@ -6,6 +6,7 @@
 }
 .input {
   width: 60rem;
+  max-width: calc(100vw - 4rem);
 }
 @media (max-height: 500px) {
   .input {

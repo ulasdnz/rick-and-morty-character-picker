@@ -1,47 +1,51 @@
-import { useRef, useEffect } from "react";
+import { RefObject } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./characters.module.css";
-import { addToSelectedCharacters } from "../../features";
+import { toggleSelectedCharacter } from "../../features";
 import CharacterName from "../display-name";
 import { RootState } from "../../redux/store";
 
-const Characters = () => {
+type CharactersProps = {
+  activeIndex: number;
+  activeItemRef: RefObject<HTMLDivElement>;
+};
+
+const Characters = ({ activeIndex, activeItemRef }: CharactersProps) => {
   const dispatch = useDispatch();
   const {
     fetchedData: { data },
-    focusedCharacterIndex,
     selectedCharacters,
     searchValue,
   } = useSelector((state: RootState) => state.rickAndMorty);
-  const focusedItemRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (!focusedItemRef.current) return;
-
-    focusedItemRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
-  }, [focusedCharacterIndex]);
+  if (!data?.results.length) {
+    return <p style={{ padding: "2rem", color: "gray" }}>No characters found.</p>;
+  }
 
   return (
     <div className={styles.characters}>
-      {data?.results.map((character, index) => (
+      {data.results.map((character, index) => (
         <div
           className={
-            focusedCharacterIndex === index
+            activeIndex === index
               ? styles.keyboardFocusedCharacter
               : styles.character
           }
-          ref={focusedCharacterIndex === index ? focusedItemRef : undefined}
-          key={index}
-          onClick={() => dispatch(addToSelectedCharacters(character.name))}
+          ref={activeIndex === index ? activeItemRef : undefined}
+          key={character.id}
+          onClick={() =>
+            dispatch(
+              toggleSelectedCharacter({ id: character.id, name: character.name })
+            )
+          }
         >
           <div className={styles.checkbox}>
             <input
               type="checkbox"
               readOnly
-              checked={selectedCharacters?.includes(character.name)}
+              tabIndex={-1}
+              aria-label={`Select ${character.name}`}
+              checked={selectedCharacters.some(({ id }) => id === character.id)}
             />
           </div>
           <div>

@@ -23,17 +23,18 @@ type ResponseData = {
   info: {
     count: number;
     pages: number;
-    next: string;
-    prev: string;
+    next: string | null;
+    prev: string | null;
   };
   results: Character[];
 };
 
+type SelectedCharacter = Pick<Character, "id" | "name">;
+
 type InitialState = {
   isOpen: boolean;
   searchValue: string;
-  focusedCharacterIndex: number;
-  selectedCharacters: string[] | null;
+  selectedCharacters: SelectedCharacter[];
   fetchedData: {
     status: string;
     data: ResponseData | null;
